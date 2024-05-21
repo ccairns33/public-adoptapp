@@ -11,6 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,10 +78,18 @@ public class AdopterRepositoryIntegrationTests {
 
     @Test
     public void testThatGetAdopterWithName(){
-//        JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
-//        adopterRepository.save(adopter);
-//        Optional<JpaAdopter> result = adopterRepository.findByName(adopter.getName());
-//        assertThat(result).isPresent();
+        JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
+        adopterRepository.save(adopter);
+        Optional<JpaAdopter> result = adopterRepository.findByName(adopter.getName());
+        assertThat(result).isPresent();
+    }
+
+    @Test
+    public void testThatGetAdoptersWithDateOfAdoption(){
+        JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
+        adopterRepository.save(adopter);
+        Iterable<JpaAdopter> result = adopterRepository.findAllWithDateOfAdoption();
+        assertThat(result).hasSizeGreaterThanOrEqualTo(1);
     }
 
 }

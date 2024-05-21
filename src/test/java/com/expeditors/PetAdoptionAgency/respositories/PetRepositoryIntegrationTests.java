@@ -97,4 +97,16 @@ public class PetRepositoryIntegrationTests {
         Optional<JpaPet> result = petRepository.findById(petA.getId());
         assertThat(result).isEmpty();
     }
+
+    @Test
+    public void testCanFindAdopterByPetId(){
+        JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
+
+        JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
+
+        petRepository.save(petA);
+        Iterable<JpaAdopter> result = petRepository.findAdopterByPetId(petA.getId());
+        assertThat(result).hasSize(1);
+
+    }
 }
