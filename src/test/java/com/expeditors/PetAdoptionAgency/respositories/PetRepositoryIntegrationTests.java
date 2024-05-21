@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -97,7 +98,28 @@ public class PetRepositoryIntegrationTests {
         Optional<JpaPet> result = petRepository.findById(petA.getId());
         assertThat(result).isEmpty();
     }
+    @Test
+    public void testThatCanGetAllPetsWithAdopter(){
+        JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
 
+        JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
+        JpaPet petB = JpaTestDataUtil.createTestJpaPetWithoutAdopter();
+        petRepository.save(petA);
+        petRepository.save(petB);
+        Iterable<JpaPet> result = petRepository.findAllPetsWithAdopters();
+
+        assertThat(result).hasSizeGreaterThanOrEqualTo(1);
+
+    }
+
+    @Test
+    public void testThatCanGetAllPetsWithoutAdopter(){
+        JpaPet petB = JpaTestDataUtil.createTestJpaPetWithoutAdopter();
+        petRepository.save(petB);
+
+        Iterable<JpaPet> result = petRepository.findAllPetsWithoutAdopters();
+        assertThat(result).hasSizeGreaterThanOrEqualTo(1);
+    }
     @Test
     public void testCanFindAdopterByPetId(){
         JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();

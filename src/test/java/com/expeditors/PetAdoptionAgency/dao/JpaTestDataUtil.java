@@ -59,4 +59,14 @@ public final class JpaTestDataUtil {
                 .jpaAdopter(adopter)
                 .build();
     }
+
+    public static JpaPet createTestJpaPetWithoutAdopter(){
+        return JpaPet.builder()
+                .name("Sheffie")
+                .type(JpaPet.PetType.DOG)
+                .breed("Russian Labrador")
+                .build();
+    }
+
+
 }
