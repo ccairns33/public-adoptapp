@@ -1,0 +1,14 @@
+# docker run -dt --name my-postgres -e POSTGRES_PASSWORD=password -e PAGER=/usr/bin/less -e LESS='-X -R -i' -p 5432:5432 docker.io/library/postgres
+services:
+  db:
+    image: postgres
+    container_name: my-postgres-adopt
+    ports:
+      - "5434:5432"
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: password
+      PAGER: /usr/bin/less
+      LESS: '-X -R -i'
+
+
