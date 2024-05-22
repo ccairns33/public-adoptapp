@@ -9,13 +9,13 @@ import org.springframework.data.repository.CrudRepository;
 @Profile("jpa-dev")
 public interface JpaPetRepository extends CrudRepository<JpaPet, Integer> {
 
-    @Query("SELECT p from JpaPet p where p.jpaAdopter is not null ")
+    @Query("SELECT p from JpaPet p where p.adopter is not null ")
     Iterable<JpaPet> findAllPetsWithAdopters();
 
-    @Query("SELECT p from JpaPet p where p.jpaAdopter is null ")
+    @Query("SELECT p from JpaPet p where p.adopter is null ")
     Iterable<JpaPet> findAllPetsWithoutAdopters();
 
-    @Query("SELECT a from JpaPet p inner join p.jpaAdopter as a where p.id = ?1")
+    @Query("SELECT a from JpaPet p inner join p.adopter as a where p.id = ?1")
     Iterable<JpaAdopter> findAdopterByPetId(Integer id);
 
 }
