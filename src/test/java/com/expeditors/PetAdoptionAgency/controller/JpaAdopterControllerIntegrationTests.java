@@ -47,4 +47,24 @@ public class JpaAdopterControllerIntegrationTests {
         );
 
     }
+
+    @Test
+    public void testThatCreateAdopterSuccessfullyReturnsSavedAdopter() throws Exception {
+        JpaAdopter jpaAdopter = JpaTestDataUtil.createTestJpaAdopter();
+        jpaAdopter.setId(null);
+        String adopterJSON = objectMapper.writeValueAsString(jpaAdopter);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/adopters")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(adopterJSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.name").value("JPA-Devin")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.phoneNumber").value("9999990000")
+        );
+
+    }
 }
