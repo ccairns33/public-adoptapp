@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Profile("jpa-dev")
-@RestController
+@RestController // presentation layer
 @RequestMapping("/api/adopters")
 public class JpaAdopterController {
 

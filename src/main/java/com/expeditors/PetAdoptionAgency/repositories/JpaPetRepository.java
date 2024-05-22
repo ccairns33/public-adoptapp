@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 @Profile("jpa-dev")
-public interface PetRepository extends CrudRepository<JpaPet, Integer> {
+public interface JpaPetRepository extends CrudRepository<JpaPet, Integer> {
 
     @Query("SELECT p from JpaPet p where p.jpaAdopter is not null ")
     Iterable<JpaPet> findAllPetsWithAdopters();

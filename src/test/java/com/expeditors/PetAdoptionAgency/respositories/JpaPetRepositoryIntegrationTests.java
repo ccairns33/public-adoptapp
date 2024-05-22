@@ -4,18 +4,15 @@ import com.expeditors.PetAdoptionAgency.dao.JpaTestDataUtil;
 
 import com.expeditors.PetAdoptionAgency.domain.JpaAdopter;
 import com.expeditors.PetAdoptionAgency.domain.JpaPet;
-import com.expeditors.PetAdoptionAgency.domain.Pet;
-import com.expeditors.PetAdoptionAgency.repositories.PetRepository;
+import com.expeditors.PetAdoptionAgency.repositories.JpaPetRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,13 +22,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("jpa-dev")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class PetRepositoryIntegrationTests {
+public class JpaPetRepositoryIntegrationTests {
 
-    private PetRepository petRepository;
+    private JpaPetRepository jpaPetRepository;
 
     @Autowired
-    public PetRepositoryIntegrationTests(PetRepository petRepository) {
-        this.petRepository = petRepository;
+    public JpaPetRepositoryIntegrationTests(JpaPetRepository jpaPetRepository) {
+        this.jpaPetRepository = jpaPetRepository;
     }
 
 
@@ -39,8 +36,8 @@ public class PetRepositoryIntegrationTests {
     public void TestThatPetCanBeCreatedAndRecalled(){
         JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
         JpaPet pet = JpaTestDataUtil.createTestJpaPet(adopter);
-        petRepository.save(pet);
-        Optional<JpaPet> result = petRepository.findById(pet.getId());
+        jpaPetRepository.save(pet);
+        Optional<JpaPet> result = jpaPetRepository.findById(pet.getId());
         assertThat(result).isPresent();
     }
 
@@ -60,15 +57,15 @@ public class PetRepositoryIntegrationTests {
         JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
 
         JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
-        petRepository.save(petA);
+        jpaPetRepository.save(petA);
 
         JpaPet petB = JpaTestDataUtil.createTestJpaPetB(adopter);
-        petRepository.save(petB);
+        jpaPetRepository.save(petB);
 
         JpaPet petC = JpaTestDataUtil.createTestJpaPetC(adopter);
-        petRepository.save(petC);
+        jpaPetRepository.save(petC);
 
-        Iterable<JpaPet> result = petRepository.findAll();
+        Iterable<JpaPet> result = jpaPetRepository.findAll();
         assertThat(result).hasSizeGreaterThanOrEqualTo(3);
     }
 
@@ -77,12 +74,12 @@ public class PetRepositoryIntegrationTests {
         JpaAdopter adopter = JpaTestDataUtil.createTestJpaAdopter();
 
         JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
-        petRepository.save(petA);
+        jpaPetRepository.save(petA);
 
         petA.setName("UPDATED");
-        petRepository.save(petA);
+        jpaPetRepository.save(petA);
 
-        Optional<JpaPet> result = petRepository.findById(petA.getId());
+        Optional<JpaPet> result = jpaPetRepository.findById(petA.getId());
         assertThat(result).isPresent();
     }
 
@@ -92,10 +89,10 @@ public class PetRepositoryIntegrationTests {
 
         JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
 
-        petRepository.save(petA);
+        jpaPetRepository.save(petA);
 
-        petRepository.deleteById(petA.getId());
-        Optional<JpaPet> result = petRepository.findById(petA.getId());
+        jpaPetRepository.deleteById(petA.getId());
+        Optional<JpaPet> result = jpaPetRepository.findById(petA.getId());
         assertThat(result).isEmpty();
     }
     @Test
@@ -104,9 +101,9 @@ public class PetRepositoryIntegrationTests {
 
         JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
         JpaPet petB = JpaTestDataUtil.createTestJpaPetWithoutAdopter();
-        petRepository.save(petA);
-        petRepository.save(petB);
-        Iterable<JpaPet> result = petRepository.findAllPetsWithAdopters();
+        jpaPetRepository.save(petA);
+        jpaPetRepository.save(petB);
+        Iterable<JpaPet> result = jpaPetRepository.findAllPetsWithAdopters();
 
         assertThat(result).hasSizeGreaterThanOrEqualTo(1);
 
@@ -115,9 +112,9 @@ public class PetRepositoryIntegrationTests {
     @Test
     public void testThatCanGetAllPetsWithoutAdopter(){
         JpaPet petB = JpaTestDataUtil.createTestJpaPetWithoutAdopter();
-        petRepository.save(petB);
+        jpaPetRepository.save(petB);
 
-        Iterable<JpaPet> result = petRepository.findAllPetsWithoutAdopters();
+        Iterable<JpaPet> result = jpaPetRepository.findAllPetsWithoutAdopters();
         assertThat(result).hasSizeGreaterThanOrEqualTo(1);
     }
     @Test
@@ -126,8 +123,8 @@ public class PetRepositoryIntegrationTests {
 
         JpaPet petA = JpaTestDataUtil.createTestJpaPet(adopter);
 
-        petRepository.save(petA);
-        Iterable<JpaAdopter> result = petRepository.findAdopterByPetId(petA.getId());
+        jpaPetRepository.save(petA);
+        Iterable<JpaAdopter> result = jpaPetRepository.findAdopterByPetId(petA.getId());
         assertThat(result).hasSize(1);
 
     }
