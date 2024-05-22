@@ -33,8 +33,9 @@ public class JpaPetController {
         // map dto to entity to use in service and persistence layers
         JpaPet petEntity = petMapper.mapFrom(jpaPetDTO);
         JpaPet savedPetEntity = jpaPetService.createPet(petEntity);
+        JpaPetDTO savedPetDTO = petMapper.mapTo(savedPetEntity);
 
-        return new ResponseEntity<>(petMapper.mapTo(savedPetEntity), HttpStatus.CREATED);
+        return new ResponseEntity<>(savedPetDTO, HttpStatus.CREATED);
 
 
     }
