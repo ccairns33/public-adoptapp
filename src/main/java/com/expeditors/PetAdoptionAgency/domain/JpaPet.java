@@ -34,7 +34,7 @@ public class JpaPet {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="adopter_id")
-    private JpaAdopter jpaAdopter;
+    private JpaAdopter adopter;
 
     @NonNull
     @Enumerated(STRING)

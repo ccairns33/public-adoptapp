@@ -32,7 +32,7 @@ public class JpaPetDTO {
     @NonNull
     private String breed;
 
-    private JpaAdopterDTO jpaAdopterDTO;
+    private JpaAdopterDTO adopter;
 
     @NonNull
     @Enumerated(STRING)
