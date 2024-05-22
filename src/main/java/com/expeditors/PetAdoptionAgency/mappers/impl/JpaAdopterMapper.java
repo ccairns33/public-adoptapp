@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 
 @Profile("jpa-dev")
 @Component
-public class JpaAdopterMapperImpl implements Mapper<JpaAdopter, JpaAdopterDTO> {
+public class JpaAdopterMapper implements Mapper<JpaAdopter, JpaAdopterDTO> {
 
     private ModelMapper modelMapper;
 
-    public JpaAdopterMapperImpl(ModelMapper modelMapper) {
+    public JpaAdopterMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 

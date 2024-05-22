@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 
+//POJO
 @Profile("jpa-dev")
 @AllArgsConstructor
 @NoArgsConstructor
