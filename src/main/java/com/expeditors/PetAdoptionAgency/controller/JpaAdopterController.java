@@ -6,6 +6,7 @@ import com.expeditors.PetAdoptionAgency.mappers.Mapper;
 import com.expeditors.PetAdoptionAgency.service.JpaAdopterService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Profile("jpa-dev")
@@ -23,12 +24,11 @@ public class JpaAdopterController {
     }
 
     @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public JpaAdopterDTO createAdopter(@RequestBody JpaAdopterDTO adopterDTO){
+    public ResponseEntity<JpaAdopterDTO> createAdopter(@RequestBody JpaAdopterDTO adopterDTO){
         JpaAdopter adopterEntity = adopterMapper.mapFrom(adopterDTO);
         JpaAdopter savedAdopterEntity = jpaAdopterService.createAdopter(adopterEntity);
 
-        return adopterMapper.mapTo(savedAdopterEntity);
+        return new ResponseEntity<>(adopterMapper.mapTo(savedAdopterEntity), HttpStatus.CREATED);
     }
 
 }
